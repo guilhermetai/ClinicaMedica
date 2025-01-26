@@ -1,0 +1,36 @@
+{% load static %}
+{% load bootstrap5 %}
+{% load render_table from django_tables2 %}
+<!doctype html>
+<html>
+
+<head>
+    <title>Gerenciar Usuários</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <center>
+                <h1>Gerenciar Usuários</h1>
+                <img src="{% static 'pagina3.png' %}" class="img-fluid" alt="Teste" width="15%">
+                <br><br>
+                
+                <!-- Renderizando a tabela com os usuários -->
+                {% render_table table %}
+                <br>
+                
+                <!-- Botão para adicionar novo usuário -->
+                <a href="{% url 'user_create_alias' %}" class="btn btn-primary">
+                    Incluir Novo Usuário
+                </a>
+                <br><br>
+
+                <!-- Botão para voltar à página anterior -->
+                <a href="{% url 'index_alias' %}" class="btn btn-secondary">Voltar</a>
+            </center>
+        </div>
+    </div>
+</body>
+
+</html>
