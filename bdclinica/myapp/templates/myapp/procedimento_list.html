@@ -4,21 +4,45 @@
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
 {% load render_table from django_tables2 %}
+
 <!doctype html>
-<html>
+<html lang="pt-BR">
 
 <head>
-    <title>Lista de procedimentos</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Lista de Procedimentos</title>
 </head>
 
 <body>
-    <div class="container">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <center>
-                <h1>Lista de procedimentos</h1>
-                <img src="{% static 'pagina3.png' %}" class="img-fluid" alt="Teste" width="30%">
-                {% render_table object_list %}
-            </center>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow-lg rounded-3">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h1 class="mb-0">Lista de Procedimentos</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <img src="{% static 'pagina3.png' %}" class="img-fluid" alt="Teste" width="20%">
+                        </div>
+                        <div class="table-responsive">
+                            {% render_table table %}
+                        </div>
+                    </div>
+
+
+                    
+                    <div class="card-footer text-end">
+                        <!--a href="{% url 'procedimento_create_alias' %}" class="btn btn-success">
+                            Adicionar Procedimento
+                        </a-->
+                        <!--a href="{% url 'index_alias' %}" class="btn btn-secondary">
+                            Voltar ao Menu
+                        </a-->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>

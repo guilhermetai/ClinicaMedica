@@ -1,64 +1,114 @@
 {% load static %}
 {% load bootstrap5 %}
 <!doctype html>
-<html>
+<html lang="pt-BR">
 
 <head>
     <title>{% if form.instance.pk %}Editar Usuário{% else %}Criar Usuário{% endif %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% bootstrap_css %}
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .form-container {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #343a40;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .form-control {
+            border-radius: 10px;
+        }
+
+        .form-container img {
+            border-radius: 10px;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="container d-flex justify-content-center">
+        <div class="col-md-8 form-container">
             <center>
                 <h1>{% if form.instance.pk %}Editar Usuário{% else %}Criar Usuário{% endif %}</h1>
-                <img src="{% static 'pagina3.png' %}" class="img-fluid" alt="Teste" width="30%">
+                <img src="{% static 'pagina3.png' %}" class="img-fluid my-4" alt="Usuário" width="20%">
+
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-
-                        <div class="row" style="line-height: 1;">
-                            <div class="col-md-1 col-sm-1 col-xs-1"></div>
-                            <div class="col-md-8 col-sm-12 col-xs-12">
-                                {% bootstrap_field form.username placeholder='Usuário' %}
-                            </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            {% bootstrap_field form.username placeholder='Usuário' %}
                         </div>
+                    </div>
 
-                        <div class="row" style="line-height: 1;">
-                            <div class="col-md-1 col-sm-1 col-xs-1"></div>
-                            <div class="col-md-8 col-sm-12 col-xs-12">
-                                {% bootstrap_field form.first_name placeholder='Primeiro Nome' %}
-                            </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {% bootstrap_field form.first_name placeholder='Primeiro Nome' %}
                         </div>
-
-                        <div class="row" style="line-height: 1;">
-                            <div class="col-md-1 col-sm-1 col-xs-1"></div>
-                            <div class="col-md-8 col-sm-12 col-xs-12">
-                                {% bootstrap_field form.last_name placeholder='Sobrenome' %}
-                            </div>
+                        <div class="col-md-6 mb-3">
+                            {% bootstrap_field form.last_name placeholder='Sobrenome' %}
                         </div>
+                    </div>
 
-                        <div class="row" style="line-height: 1;">
-                            <div class="col-md-1 col-sm-1 col-xs-1"></div>
-                            <div class="col-md-8 col-sm-12 col-xs-12">
-                                {% bootstrap_field form.email placeholder='Email' %}
-                            </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            {% bootstrap_field form.email placeholder='Email' %}
                         </div>
+                    </div>
+       
+                    <!-- Campo de senha para novo usuário -->
+                    {% if not form.instance.pk %}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {% bootstrap_field form.password1 placeholder='Senha' %}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {% bootstrap_field form.password2 placeholder='Confirme a Senha' %}
+                        </div>
+                    </div>
+                    {% endif %}
 
-                        <div class="row" style="line-height: 1;">
-                            <div class="col-md-1 col-sm-1 col-xs-1"></div>
-                            <div class="col-md-4 col-sm-4 col-xs-4">
-                                <a href="{% url 'user_menu_alias' %}" class="btn btn-secondary">Voltar</a>
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-xs-4 text-right">
-                                <button type="submit" class="btn btn-primary">Salvar</button>
-                            </div>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <a href="{% url 'user_menu_alias' %}" class="btn btn-secondary btn-block">Voltar</a>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <button type="submit" class="btn btn-primary btn-block">Salvar</button>
                         </div>
                     </div>
                 </form>
             </center>
         </div>
     </div>
+    {% bootstrap_javascript %}
 </body>
 
 </html>

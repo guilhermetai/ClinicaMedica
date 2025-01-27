@@ -1,7 +1,7 @@
 import django_tables2 as tables
 from django.urls import reverse
 from django_tables2.utils import A
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,Group
 from django.utils.html import format_html
 
 class UserTable(tables.Table):

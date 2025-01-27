@@ -8,13 +8,14 @@
 
 <head>
     <title>Formulário de Procedimentos</title>
+    <title>{% if form.instance.pk %}Editar Procedimento{% else %}Incluir Procedimento{% endif %}</title>
 </head>
 
 <body>
     <div class="container">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <center>
-                <h1>Incluir Procedimento</h1>
+                <h1>{% if form.instance.pk %}Editar Procedimento{% else %}Incluir Procedimento{% endif %}</h1>
                 <img src="{% static 'pagina3.png' %}" class="img-fluid" alt="Teste" width="30%">
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}

@@ -2,6 +2,7 @@ import django_tables2 as tables
 from django_tables2.utils import A
 from django.utils.html import format_html
 from .models import Procedimento
+
 class procedimento_table(tables.Table):
     nome = tables.LinkColumn("procedimento_update_alias", args=[A("pk")])
     paciente = tables.Column()

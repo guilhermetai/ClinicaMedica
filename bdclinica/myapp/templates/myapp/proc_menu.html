@@ -2,29 +2,48 @@
 {% load bootstrap5 %}
 {% load render_table from django_tables2 %}
 <!doctype html>
-<html>
+<html lang="pt-BR">
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Menu de Procedimentos</title>
+    {% bootstrap_css %}
 </head>
 
 <body>
-    <div class="container">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <center>
-                <h1>Menu de Procedimentos</h1>
-                <img src="{% static 'pagina3.png' %}" class="img-fluid" alt="Teste" width="15%">
-                <br><br>
-                {% render_table table %}
-                <br>
-                <a href="{% url 'procedimento_create_alias' %}">
-                    <input type="button" class="btn btn-primary" value="Incluir novo procedimento">
-                </a>
-                <br><br>
-                <a href="{% url 'index_alias' %}" class="btn btn-secondary">Voltar</a>
-            </center>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow-lg rounded-3">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h1 class="mb-0">Menu de Procedimentos</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-4">
+                            <img src="{% static 'pagina3.png' %}" class="img-fluid" alt="Menu" width="20%">
+                        </div>
+                        <div class="table-responsive">
+                            {% render_table table %}
+                        </div>
+                      
+                        <div class="text-end mt-3">
+                            <a href="{% url 'procedimento_create_alias' %}" class="btn btn-success">
+                                Incluir Novo Procedimento
+                            </a>
+                        </div>
+                  
+                    </div>
+                    <!--div class="card-footer text-end">
+                        <a href="{% url 'index_alias' %}" class="btn btn-secondary">
+                            Voltar ao Menu Principal
+                        </a>
+                    </div-->
+                </div>
+            </div>
         </div>
     </div>
+    {% bootstrap_javascript %}
 </body>
 
 </html>
