@@ -49,31 +49,12 @@ def index(request):
     else:
         return render(request, 'index.html')
 
-
-def pagina1(request):
-    return render(request, 'pagina1.html')
-
-
-def pagina2(request):
-    dicionario = {}
-    registros = Procedimento.objects.all()
-    dicionario['Procedimentos'] = registros
-    return render(request, 'pagina2.html', dicionario)
-
-
-def pagina3(request):
-    dicionario = {}
-    registros = Procedimento.objects.all()
-    dicionario['Procedimentos'] = registros
-    return render(request, 'pagina3.html', dicionario)
-
-
 # Listagem de procedimentos
 class procedimento_list(SingleTableView):
     from .tables import procedimento_table
     model = Procedimento
     table_class = procedimento_table
-    template_name = 'myapp/proceimento_list.html'
+    template_name = 'myapp/procedimento_list.html'
 
 
 # Criação de procedimentos (restrito a funcionários e administradores)
@@ -109,7 +90,7 @@ class procedimento_menu(SingleTableView):
     model = Procedimento
     table_class = procedimento_table
     template_name_suffix = '_menu'
-    table_pagination = {"per_page": 5}
+    table_pagination = {"per_page": 10}
     template_name = 'myapp/proc_menu.html'
 
 

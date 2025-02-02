@@ -1,72 +1,60 @@
+{% extends "base.html" %}
 {% load static %}
 {% load bootstrap5 %}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
-{% bootstrap_messages %}
-<!doctype html>
-<html>
 
-<head>
-    <title>Formulário de Procedimentos</title>
-    <title>{% if form.instance.pk %}Editar Procedimento{% else %}Incluir Procedimento{% endif %}</title>
-</head>
+{% block title %}{% if form.instance.pk %}Editar Procedimento{% else %}Incluir Procedimento{% endif %}{% endblock %}
 
-<body>
-    <div class="container">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <center>
-                <h1>{% if form.instance.pk %}Editar Procedimento{% else %}Incluir Procedimento{% endif %}</h1>
-                <img src="{% static 'pagina3.png' %}" class="img-fluid" alt="Teste" width="30%">
-                <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="row" style="line-height: 1;">
-                            <div class="col-md-1 col-sm-1 col-xs-1"></div>
-                            <div class="col-md-8 col-sm-12 col-xs-12">
-                                {% bootstrap_field form.nome placeholder='' %}
-                            </div>
-                        </div>
+{% block content %}
+<div class="container">
+    <div class="custom-card">
+        <div class="custom-header">
+            <h1>{% if form.instance.pk %}Editar Procedimento{% else %}Incluir Procedimento{% endif %}</h1>
+        </div>
+        <div class="custom-body">
+            <div class="image-container">
+                <img src="{% static 'pagina3.png' %}" class="img-fluid my-4" alt="Procedimento" width="30%">
+            </div>
 
-                        <div class="row" style="line-height: 1;">
-                            <div class="col-md-1 col-sm-1 col-xs-1"></div>
-                            <div class="col-md-8 col-sm-12 col-xs-12">
-                                {% bootstrap_field form.paciente placeholder='' %}
-                            </div>
-                        </div>
-
-                        <div class="row" style="line-height: 1;">
-                            <div class="col-md-1 col-sm-1 col-xs-1"></div>
-                            <div class="col-md-4 col-sm-4 col-xs-4">
-                                {% bootstrap_field form.medico placeholder='' %}
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-xs-4">
-                                {% bootstrap_field form.data placeholder='' %}
-                            </div>
-                        </div>
-
-                        <!-- Alinhando a descrição -->
-                        <div class="row" style="line-height: 1;">
-                            <div class="col-md-1 col-sm-1 col-xs-1"></div>
-                            <div class="col-md-8 col-sm-12 col-xs-12">
-                                {% bootstrap_field form.descricao placeholder='' %}
-                            </div>
-                        </div>
-
-                        <div class="row" style="line-height: 1;">
-                            <div class="col-md-1 col-sm-1 col-xs-1"></div>
-                            <div class="col-md-4 col-sm-4 col-xs-4">
-                                <!--button type="button" class="btn btn-secondary" onclick="window.history.back();">Voltar</button -->
-                                <a href="{% url 'procedimento_list_alias' %}" class="btn btn-secondary">Voltar</a>                           
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-xs-4 text-right">
-                                <button type="submit" class="btn btn-primary">Salvar</button>
-                            </div>
-                        </div>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        {% bootstrap_field form.nome placeholder='Nome do Procedimento' %}
                     </div>
-                </form>
-            </center>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        {% bootstrap_field form.paciente placeholder='Paciente' %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        {% bootstrap_field form.medico placeholder='Médico' %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        {% bootstrap_field form.data placeholder='Data' %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        {% bootstrap_field form.descricao placeholder='Descrição do Procedimento' %}
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <a href="{% url 'procedimento_list_alias' %}" class="btn btn-secondary btn-block">Voltar</a>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <button type="submit" class="btn btn-primary btn-block">Salvar</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-</body>
-
-</html>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Excluir Procedimento{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card mt-5">
+        <div class="card-header">
+            <h1>Tem certeza que deseja excluir este procedimento?</h1>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                    <a href="{% url 'procedimento_list_alias' %}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

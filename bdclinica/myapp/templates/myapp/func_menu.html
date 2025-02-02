@@ -1,55 +1,42 @@
+{% extends "base.html" %}
 {% load static %}
 {% load bootstrap5 %}
-<!doctype html>
-<html lang="pt-BR">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Menu Principal - Funcionário</title>
-    {% bootstrap_css %}
-    <style>
-        .menu-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 350px; /* Define uma altura fixa para os itens do menu */
-            text-align: center;
-            font-size: 18px;
-        }
-    </style>
-</head>
+{% block title %}Menu Principal - Funcionário{% endblock %}
 
-<body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <center>
-                    <h1>Menu Principal - Funcionário</h1>
-                    <img src="{% static 'pagina3.png' %}" class="img-fluid" alt="Menu Principal" width="30%">
-                    <br><br>
-
-                    <!-- Menu de Ações -->
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <a href="{% url 'user_menu_alias' %}" class="list-group-item list-group-item-action menu-item">
-                                Gerenciar Usuários
-                            </a>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <a href="{% url 'proc_menu_alias' %}" class="list-group-item list-group-item-action menu-item">
-                                Gerenciar Procedimentos
-                            </a>
-                        </div>
-                    </div>
-
-                    <br>
-                    <a href="{% url 'index_alias' %}" class="btn btn-danger">Sair</a>
-                </center>
+{% block content %}
+<div class="container">'
+    <center>
+    <div class="custom-card">
+        <div class="custom-header">
+            <h1>Menu Principal - Funcionário</h1>
+        </div>
+        <div class="custom-body">
+            <div class="image-container">
+                <img src="{% static 'pagina3.png' %}" class="img-fluid" alt="Menu Principal" width="30%">
+            </div>
+            
+            <!-- Menu de Ações -->
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-6 mb-3">
+                    <a href="{% url 'user_menu_alias' %}" class="list-group-item list-group-item-action menu-item">
+                        Gerenciar Usuários
+                    </a>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <a href="{% url 'proc_menu_alias' %}" class="list-group-item list-group-item-action menu-item">
+                        Gerenciar Procedimentos
+                    </a>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <a href="{% url 'index_alias' %}" class="btn btn-danger text-white">
+                    Sair
+                </a>
             </div>
         </div>
     </div>
-    {% bootstrap_javascript %}
-</body>
-
-</html>
+    </center>
+</div>
+{% endblock %}
