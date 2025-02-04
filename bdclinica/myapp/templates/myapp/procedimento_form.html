@@ -7,14 +7,17 @@
 {% block content %}
 <div class="container">
     <div class="custom-card">
+    <center>
         <div class="custom-header">
             <h1>{% if form.instance.pk %}Editar Procedimento{% else %}Incluir Procedimento{% endif %}</h1>
         </div>
+    </center>
         <div class="custom-body">
+        <center>
             <div class="image-container">
-                <img src="{% static 'pagina3.png' %}" class="img-fluid my-4" alt="Procedimento" width="30%">
+                <img src="{% static 'procedimentos.png' %}" alt="Procedimento" width="200px">
             </div>
-
+        </center>
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 
@@ -47,7 +50,7 @@
 
                 <div class="row mt-4">
                     <div class="col-md-6">
-                        <a href="{% url 'procedimento_list_alias' %}" class="btn btn-secondary btn-block">Voltar</a>
+                        <a href="{% url 'proc_menu_alias' %}" class="btn btn-secondary btn-block">Voltar</a>
                     </div>
                     <div class="col-md-6 text-end">
                         <button type="submit" class="btn btn-primary btn-block">Salvar</button>

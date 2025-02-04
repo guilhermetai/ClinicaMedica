@@ -8,13 +8,16 @@
 <div class="container">
     <div class="custom-card">
         <div class="custom-header">
+            <center>
             <h1>{% if form.instance.pk %}Editar Usuário{% else %}Criar Usuário{% endif %}</h1>
         </div>
+            </center>
         <div class="custom-body">
+            <center>
             <div class="image-container">
-                <img src="{% static 'pagina3.png' %}" class="img-fluid my-4" alt="Usuário" width="20%">
+                <img src="{% static 'users.png' %}" class="img-fluid my-4" alt="Usuário" width="200px">
             </div>
-
+           </center>
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 

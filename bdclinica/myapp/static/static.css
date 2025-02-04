@@ -7,6 +7,14 @@ h1 {
     margin-bottom: 20px;
 }
 
+.titulo-index {
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff;
+    text-align: center;
+}
+
+
 .container {
     max-width: 900px;
 }

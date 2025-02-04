@@ -8,27 +8,27 @@
 <!doctype html>
 <html>
 
-{% block title %}Procedimentos{% endblock title %}
+{% block title %}Clinica Medica{% endblock title %}
 {% block content %}
 
 
 <div class="custom-body">
     <div class="image-container">
         <center>
-        <img src="{% static 'home_logo.jpg' %}"  alt="Menu" width="30%">
+        <img src="{% static 'hospital.png' %}"  alt="Menu" width="450px">
         </center>
     </div>
     <div >
         <form method="POST" action="{% url 'index_alias' %}">
             {% csrf_token %}
             <center>
-                <p style="width:300px;">Bem Vindo ao Site da Clinica</p>
-                <div style="border-style: ridge; border-radius: 10px; width: 300px;">
+                <p class="titulo-index">Bem Vindo ao Site da Clinica</p>
+                <div style="border-style: ridge; border-radius: 10px; width: 400px;">
                     <br>
-                    <p><input type="text" name="username" class="border-top-0" placeholder="User Name" style="width:250px;">
+                    <p><input type="text" name="username" class="border-top-0" placeholder="User Name" style="width:350px;">
                     </p>
                     <p></p><input type="password" name="password" class="border-top-0" placeholder="Password"
-                        style="width:250px;">
+                        style="width:350px;">
                     </p>
                     <p></p><input type="submit" value="Acessar" class="btn btn-info"></p>
                 </div>
