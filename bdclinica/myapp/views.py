@@ -5,7 +5,7 @@ from .models import Procedimento
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django_tables2 import SingleTableView
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django import forms
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.mixins import UserPassesTestMixin
@@ -24,7 +24,7 @@ class AdminOrFuncionarioOrMedicoRequiredMixin(UserPassesTestMixin):
         return self.request.user.is_superuser or self.request.user.groups.filter(name__in=['Funcionario','Medico']).exists()
 
     def handle_no_permission(self):
-        return HttpResponseForbidden("Apenas administradores ou funcionários podem acessar esta página.")
+        return HttpResponseForbidden("Apenas administradores , Medicos ou funcionários podem acessar esta página.")
 
 def index(request):
     usuario = request.POST.get('username')
@@ -46,6 +46,9 @@ def index(request):
             return render(request, 'myapp/func_menu.html')
         elif request.user.groups.filter(name='Paciente').exists():
             return redirect('procedimento_list_alias')
+        else:
+            return HttpResponseForbidden("Usuário sem Função")
+
     else:
         return render(request, 'index.html')
 
@@ -94,50 +97,37 @@ class procedimento_menu(SingleTableView):
     template_name = 'myapp/proc_menu.html'
 
 
-# Formulário customizado para criação de usuários
-class CustomUserCreationForm(UserCreationForm):
-    group = forms.ModelChoiceField(queryset=Group.objects.all(), required=True, label="Grupo")
-
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2', 'group']
-
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        group = self.cleaned_data['group']
-        if commit:
-            user.save()
-            user.groups.add(group)
-        return user
 
 
-# Listagem dos usuários
+    # Listagem dos usuários
 class UserListView(AdminOrFuncionarioRequiredMixin, SingleTableView):
-    from .pessoas import UserTable
+    from .tables import UserTable
     model = User
     table_class = UserTable
     template_name = 'myapp/user_menu.html'
-
-
-# Criação de usuários
+    
+### Criacao dos usuários
 class UserCreateView(AdminOrFuncionarioRequiredMixin, CreateView):
     model = User
-    form_class = CustomUserCreationForm
-    template_name = 'myapp/user_form.html'
-    success_url = reverse_lazy('user_menu_alias')
-
-
+    form_class = UserCreationForm
+    form = UserChangeForm
+    add_form = UserCreationForm
+    template_name = "myapp/user_form.html"
+    def get_success_url(self):
+        return reverse_lazy('user_menu_alias')
+    
+    
 # Edição de usuários
-class UserUpdateView(AdminOrFuncionarioRequiredMixin, UpdateView):
+class UserUpdateView(AdminOrFuncionarioRequiredMixin, UpdateView):    
     model = User
     fields = ['username', 'email', 'first_name', 'last_name', 'groups']
     template_name = 'myapp/user_form.html'
-    success_url = reverse_lazy('user_menu_alias')
-    
-
+    def get_success_url(self):
+        success_url = reverse_lazy('user_menu_alias')   
 
 # Exclusão de usuários
 class UserDeleteView(AdminOrFuncionarioRequiredMixin, DeleteView):
     model = User
     template_name_suffix = '_delete'
-    success_url = reverse_lazy('user_menu_alias')
+    def get_success_url(self):
+        success_url = reverse_lazy('user_menu_alias')

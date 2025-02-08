@@ -7,20 +7,17 @@
 {% block content %}
 <div class="container">
     <div class="custom-card">
-        <div class="custom-header">
-            <center>
+        <div class="custom-header text-center">
             <h1>{% if form.instance.pk %}Editar Usuário{% else %}Criar Usuário{% endif %}</h1>
         </div>
-            </center>
-        <div class="custom-body">
-            <center>
+        <div class="custom-body text-center">
             <div class="image-container">
                 <img src="{% static 'users.png' %}" class="img-fluid my-4" alt="Usuário" width="200px">
             </div>
-           </center>
+
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                
+
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         {% bootstrap_field form.username placeholder='Usuário' %}
@@ -29,18 +26,34 @@
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        {% bootstrap_field form.first_name placeholder='Primeiro Nome' %}
+        
                     </div>
                     <div class="col-md-6 mb-3">
-                        {% bootstrap_field form.last_name placeholder='Sobrenome' %}
+                   
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12 mb-3">
-                        {% bootstrap_field form.email placeholder='Email' %}
+               
                     </div>
                 </div>
+
+                <!-- Campo de seleção do tipo de usuário -->
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label for="id_tipo_usuario">Tipo de Usuário:</label>
+                        <select name="tipo_usuario" id="id_tipo_usuario" class="form-control">
+                            <option value="" selected>Selecione...</option>
+                            <option value="paciente">Paciente</option>
+                            <option value="medico">Médico</option>
+                            <option value="funcionario">Funcionário</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Campos extras (exibidos dinamicamente) -->
+                <div id="extra-fields"></div>
 
                 <!-- Campo de senha para novo usuário -->
                 {% if not form.instance.pk %}
@@ -66,4 +79,42 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById("id_tipo_usuario").addEventListener("change", function() {
+        let tipo = this.value;
+        let extraFields = document.getElementById("extra-fields");
+        extraFields.innerHTML = ""; // Limpa os campos extras
+
+        if (tipo === "paciente") {
+            extraFields.innerHTML = `
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label for="id_data_nascimento">Data de Nascimento:</label>
+                        <input type="date" name="data_nascimento" id="id_data_nascimento" class="form-control">
+                    </div>
+                </div>
+            `;
+        } else if (tipo === "medico") {
+            extraFields.innerHTML = `
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label for="id_crm">CRM:</label>
+                        <input type="text" name="crm" id="id_crm" class="form-control">
+                    </div>
+                </div>
+            `;
+        } else if (tipo === "funcionario") {
+            extraFields.innerHTML = `
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label for="id_cargo">Cargo:</label>
+                        <input type="text" name="cargo" id="id_cargo" class="form-control">
+                    </div>
+                </div>
+            `;
+        }
+    });
+</script>
+
 {% endblock %}
