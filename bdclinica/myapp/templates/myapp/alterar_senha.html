@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+{% load bootstrap5 %}
+
+{% block title %}Alterar Senha{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="custom-card">
+        <div class="custom-header text-center">
+            <h1>Alterar Senha</h1>
+        </div>
+        <div class="custom-body text-center">
+            <div class="image-container">
+                <img src="{% static 'users.png' %}" class="img-fluid my-4" alt="Usuário" width="200px">
+            </div>
+        
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="row"> 
+                    <center>
+                    <div class="col-md-6 mb-3">
+                        
+                        {% bootstrap_field form.new_password1 placeholder='Senha' %}
+                    
+                    </div>
+                </center> 
+                </div>
+
+            
+                    <div class="row">
+                        <center>
+                    <div class="col-md-6 mb-3">
+                        {% bootstrap_field form.new_password2 placeholder='Confirme a Senha' %}
+                    </div>
+                         </center>
+                </div>
+       
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <a href="{% url 'user_menu_alias' %}" class="btn btn-secondary btn-block">Voltar</a>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <button type="submit" class="btn btn-primary btn-block">Salvar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

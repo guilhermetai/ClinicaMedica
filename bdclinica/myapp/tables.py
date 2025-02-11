@@ -16,10 +16,7 @@ class procedimento_table(tables.Table):
     def render_actions(self, record):
         return format_html(
             '<a href="{}" class="btn btn-warning btn-sm">Editar</a> '
-           ## '<form action="{}" method="POST" style="display:inline;">'
-           ## '{% csrf_token %}'
-            '<button type="submit" class="btn btn-danger btn-sm">Excluir</button>',
-          ##  '</form>',
+            '<a href="{}" class="btn btn-danger btn-sm">Excluir</a>',
             reverse('procedimento_update_alias', args=[record.pk]),
             reverse('procedimento_delete_alias', args=[record.pk])
     )
@@ -42,8 +39,10 @@ class UserTable(tables.Table):
     def render_actions(self, record):
         return format_html(
             '<a href="{}" class="btn btn-warning btn-sm">Editar</a> '
+            '<a href="{}" class="btn btn-primary btn-sm">Trocar Senha</a> '
             '<a href="{}" class="btn btn-danger btn-sm">Excluir</a>',
             reverse('user_update_alias', args=[record.pk]),
+            reverse('alterar_senha_alias', args=[record.pk]),
             reverse('user_delete_alias', args=[record.pk])
         )
 

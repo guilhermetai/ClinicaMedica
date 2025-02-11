@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Excluir Procedimento{% endblock %}
+{% block title %}Excluir Usuario{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="card mt-5">
         <div class="card-header">
             <center>
-            <h1>Tem certeza que deseja excluir este procedimento?</h1>
+            <h1>Tem certeza que deseja excluir este Usuario?</h1>
             </center>
         </div>
         <div class="card-body">
@@ -16,7 +16,7 @@
                 <center>
                 <div class="form-group">
                     <button type="submit" class="btn btn-danger">Excluir</button>
-                    <a href="{% url 'proc_menu_alias' %}" class="btn btn-secondary">Cancelar</a>
+                    <a href="{% url 'user_menu_alias' %}" class="btn btn-secondary">Cancelar</a>
                 </center>
                 </div>
             </form> 

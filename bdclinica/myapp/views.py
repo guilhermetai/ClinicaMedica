@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.auth import authenticate, login, logout
 from .models import Procedimento
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView,FormView
 from django.urls import reverse_lazy
 from django_tables2 import SingleTableView
-from django.contrib.auth.forms import UserCreationForm,UserChangeForm
+from django.contrib.auth.forms import UserCreationForm,UserChangeForm,PasswordChangeForm,SetPasswordForm
 from django import forms
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.mixins import UserPassesTestMixin
@@ -79,10 +79,10 @@ class procedimento_update(AdminOrFuncionarioOrMedicoRequiredMixin, UpdateView):
 
 
 # Exclusão de procedimentos (restrito a funcionários e administradores)
-class procedimento_delete(AdminOrFuncionarioRequiredMixin, DeleteView):
+class procedimento_delete(AdminOrFuncionarioOrMedicoRequiredMixin, DeleteView):
     model = Procedimento
-    template_name_suffix = '_delete'
-
+    #template_name_suffix = '_delete'
+    template_name = 'myapp/procedimento_delete.html'
     def get_success_url(self):
         return reverse_lazy('proc_menu_alias')
 
@@ -100,7 +100,7 @@ class procedimento_menu(SingleTableView):
 
 
     # Listagem dos usuários
-class UserListView(AdminOrFuncionarioRequiredMixin, SingleTableView):
+class UserListView( SingleTableView):
     from .tables import UserTable
     model = User
     table_class = UserTable
@@ -115,19 +115,56 @@ class UserCreateView(AdminOrFuncionarioRequiredMixin, CreateView):
     template_name = "myapp/user_form.html"
     def get_success_url(self):
         return reverse_lazy('user_menu_alias')
-    
+
+
+class UserCreateView2(AdminOrFuncionarioRequiredMixin, CreateView):
+    model = User
+    fields = ['username', 'first_name', 'last_name', 'email']
+    template_name="myapp/user_form2.html"
+    def get_success_url(self):
+        return reverse_lazy('user_menu_alias')
+
     
 # Edição de usuários
 class UserUpdateView(AdminOrFuncionarioRequiredMixin, UpdateView):    
     model = User
-    fields = ['username', 'email', 'first_name', 'last_name', 'groups']
-    template_name = 'myapp/user_form.html'
+    fields = ['username', 'first_name', 'last_name', 'email']
+    template_name = 'myapp/user_form2.html'
     def get_success_url(self):
-        success_url = reverse_lazy('user_menu_alias')   
+        return reverse_lazy('user_menu_alias')   
 
 # Exclusão de usuários
 class UserDeleteView(AdminOrFuncionarioRequiredMixin, DeleteView):
     model = User
-    template_name_suffix = '_delete'
+    template_name = 'myapp/user_delete.html'
     def get_success_url(self):
-        success_url = reverse_lazy('user_menu_alias')
+        return reverse_lazy('user_menu_alias')
+
+class ChangePasswordUser_old(AdminOrFuncionarioRequiredMixin,FormView):
+    template_name='myapp/alterar_senha.html'
+    form=SetPasswordForm
+    fields = ['new_password1','new_password2']
+    def get_success_url(self):
+        return reverse_lazy('user_menu_alias')
+
+class ChangePasswordUser(FormView):
+    template_name = 'myapp/alterar_senha.html'
+    form_class = SetPasswordForm  # <-- O correto é `form_class`
+    def get_user(self):
+        try:
+            return User.objects.get(pk=self.kwargs['pk'])
+        except:
+            return None 
+        
+    def get_form(self, form_class=None):
+        """ Garante que o formulário seja instanciado com o usuário correto. """
+        user = self.get_user()
+        return self.form_class(user=user, **self.get_form_kwargs())
+
+    def form_valid(self, form):
+        """ Salva a nova senha e redireciona. """
+        form.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('user_menu_alias')
