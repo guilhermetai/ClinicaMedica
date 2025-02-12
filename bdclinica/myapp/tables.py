@@ -32,9 +32,23 @@ class UserTable(tables.Table):
     email = tables.Column(verbose_name="Email")
     first_name = tables.Column(verbose_name="Primeiro Nome")
     last_name = tables.Column(verbose_name="Sobrenome")
-    cargo = tables.Column(verbose_name="Cargo", orderable=False)
+    cargo = tables.Column(verbose_name="Cargo", orderable=False, )
     def render_cargo(self, record):
-        return ", ".join(record.cargo())
+        print(f"DEBUG: render_cargo chamado para {record.username}")  
+        user_obj=User.objects.get(username=record.username)
+        user_groups=user_obj.groups.all()
+        user_group=user_groups.first()
+        print(f"Usuário: {record.username}, {user_group if user_group else "Sem grupo"}")
+        return user_group if user_group else "Sem grupo"
+    def get_cargo_value(self, record):        
+        user_obj=User.objects.get(username=record.username)
+        user_groups=user_obj.groups.all()
+        user_group=user_groups.first()
+        print(f"Usuário: {record.username}, {user_group if user_group else "Sem grupo"}")
+        return user_group if user_group else "Sem grupo"
+    tosco = tables.Column(verbose_name="Tosco", orderable=False, )
+    
+    
     actions = tables.Column(empty_values=(), verbose_name="Ações")
     def render_actions(self, record):
         return format_html(
@@ -50,4 +64,4 @@ class UserTable(tables.Table):
         model = User
         attrs = {"class": "table table-striped table-hover"}
         template_name = "django_tables2/bootstrap4.html"
-        fields = ('username', 'email', 'first_name', 'last_name')       
+        fields = ('username', 'email', 'first_name', 'last_name','cargo','tosco')       

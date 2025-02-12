@@ -105,6 +105,15 @@ class UserListView( SingleTableView):
     model = User
     table_class = UserTable
     template_name = 'myapp/user_menu.html'
+    def get_queryset(self):
+        return User.objects.prefetch_related("groups")
+    
+    def get_table(self, *args, **kwargs):
+        table = super().get_table(*args, **kwargs)
+        for record in table.data:
+            # Forçando a chamada do método render_cargo
+            record.cargo = table.render_cargo(record)
+        return table 
     
 ### Criacao dos usuários
 class UserCreateView(AdminOrFuncionarioRequiredMixin, CreateView):
